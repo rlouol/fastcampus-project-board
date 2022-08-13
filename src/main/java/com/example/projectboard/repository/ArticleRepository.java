@@ -12,8 +12,6 @@ import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
-import java.util.List;
-
 @RepositoryRestResource
 public interface ArticleRepository extends
     JpaRepository<Article, Long>,
@@ -26,7 +24,6 @@ public interface ArticleRepository extends
     Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
     Page<Article> findByHashtag(String hashtag, Pageable pageable);
 
-    List<String> findAllDistinctHashtags();
 
     void deleteByIdAndUserAccount_UserId(Long articleId, String userId);
 
