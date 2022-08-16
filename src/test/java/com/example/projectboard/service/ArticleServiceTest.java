@@ -3,6 +3,7 @@ package com.example.projectboard.service;
 import com.example.projectboard.domain.Article;
 import com.example.projectboard.domain.UserAccount;
 import com.example.projectboard.domain.type.SearchType;
+import com.example.projectboard.dto.ArticleCommentDto;
 import com.example.projectboard.dto.ArticleDto;
 import com.example.projectboard.dto.ArticleWithCommentsDto;
 import com.example.projectboard.dto.UserAccountDto;
@@ -108,7 +109,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
         // When
-        ArticleWithCommentsDto dto = sut.getArticleWithComments(articleId);
+        ArticleCommentDto dto = sut.getArticleComment(articleId);
 
         // Then
         assertThat(dto)
@@ -126,7 +127,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.empty());
 
         // When
-        Throwable t = catchThrowable(() -> sut.getArticleWithComments(articleId));
+        Throwable t = catchThrowable(() -> sut.getArticleComment(articleId));
 
         // Then
         assertThat(t)
@@ -144,7 +145,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
         // When
-        ArticleDto dto = sut.getArticle(articleId);
+        ArticleWithCommentsDto dto = sut.getArticle(articleId);
 
         // Then
         assertThat(dto)
