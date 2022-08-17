@@ -51,7 +51,7 @@ public record ArticleCommentDto(
     public ArticleComment toEntity(Article article) {
         return ArticleComment.of(
                 article,
-                userAccount,
+                article.getUserAccount(),
                 content
         );
     }
