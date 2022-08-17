@@ -82,8 +82,8 @@ public class ArticleService {
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId " + articleId));
     }
 
-    public void deleteArticle(Long articleId) {
-        articleRepository.deleteByIdAndUserAccount_UserId(articleId);
+    public void deleteArticle(Long articleId, String userId) {
+        articleRepository.deleteByIdAndUserAccount_UserId(articleId, userId);
     }
 
     @Transactional(readOnly = true)
