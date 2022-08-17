@@ -78,8 +78,13 @@ public class ArticleService {
         articleRepository.deleteByIdAndUserAccount_UserId(articleId, userId);
     }
 
-    public Page<ArticleDto> searchArticlesViaHashtag(Object o, Pageable pageable) {
-        return Page.empty();
+    @Transactional(readOnly = true)
+    public Page<ArticleDto> searchArticlesViaHashtag(String hashtag, Pageable pageable) {
+        if(hashtag == null || hashtag.isBlank()) {
+            return Page.empty(pageable);
+        }
+
+        return articleRepository.findByHashtag(hashtag, pageable).map(ArticleDto::from);
     }
 
     public long getArticleCount() {
@@ -87,7 +92,7 @@ public class ArticleService {
     }
 
     public List<String> getHashtags() {
-        return List.of();
+        return articleRepository.findAllDistinctHashtags();
     }
 
     public ArticleCommentDto getArticleComment(Long articleId) {
