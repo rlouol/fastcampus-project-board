@@ -83,7 +83,7 @@ public class ArticleController {
     public String articleForm(ModelMap map) {
         map.addAttribute("formStatus", FormStatus.CREATE);
 
-        return "article/form";
+        return "articles/form";
     }
 
     @PostMapping("/form")
@@ -103,13 +103,13 @@ public class ArticleController {
         map.addAttribute("article", article);
         map.addAttribute("formStatus", FormStatus.UPDATE);
 
-        return "article/form";
+        return "articles/form";
     }
 
     @PostMapping("/{articleId}/form")
     public String updateArticle(@PathVariable Long articleId, ArticleRequest articleRequest) {
         // TODO: 인증 정보를 넣어줘야 한다.
-        articleService.saveArticle(articleRequest.toDto(UserAccountDto.of(
+        articleService.updateArticle(articleId, articleRequest.toDto(UserAccountDto.of(
                 "gyumipark", "asdf1234", "gyumipark@gmail.com", "gyumipark", "memo"
         )));
 
