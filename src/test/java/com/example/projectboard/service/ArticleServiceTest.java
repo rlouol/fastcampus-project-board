@@ -3,8 +3,8 @@ package com.example.projectboard.service;
 import com.example.projectboard.domain.Article;
 import com.example.projectboard.domain.UserAccount;
 import com.example.projectboard.domain.contant.SearchType;
-import com.example.projectboard.dto.ArticleCommentDto;
 import com.example.projectboard.dto.ArticleDto;
+import com.example.projectboard.dto.ArticleWithCommentsDto;
 import com.example.projectboard.dto.UserAccountDto;
 import com.example.projectboard.repository.ArticleRepository;
 import com.example.projectboard.repository.UserAccountRepository;
@@ -124,7 +124,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
         // When
-        ArticleCommentDto dto = sut.getArticleComment(articleId);
+        ArticleWithCommentsDto dto = sut.getArticleWithComments(articleId);
 
         // Then
         assertThat(dto)
@@ -142,7 +142,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.empty());
 
         // When
-        Throwable t = catchThrowable(() -> sut.getArticleComment(articleId));
+        Throwable t = catchThrowable(() -> sut.getArticleWithComments(articleId));
 
         // Then
         assertThat(t)
@@ -270,7 +270,7 @@ class ArticleServiceTest {
 
     private UserAccount createUserAccount() {
         return UserAccount.of(
-                "uno",
+                "gyumipark",
                 "password",
                 "uno@email.com",
                 "Uno",
@@ -309,7 +309,7 @@ class ArticleServiceTest {
 
     private UserAccountDto createUserAccountDto() {
         return UserAccountDto.of(
-                "uno",
+                "gyumipark",
                 "password",
                 "uno@mail.com",
                 "Uno",
