@@ -2,6 +2,7 @@ package com.example.projectboard.dto;
 
 import com.example.projectboard.domain.Article;
 import com.example.projectboard.domain.ArticleComment;
+import com.example.projectboard.domain.UserAccount;
 
 import java.time.LocalDateTime;
 
@@ -48,10 +49,10 @@ public record ArticleCommentDto(
         );
     }
 
-    public ArticleComment toEntity(Article article) {
+    public ArticleComment toEntity(Article article, UserAccount userAccount) {
         return ArticleComment.of(
                 article,
-                article.getUserAccount(),
+                userAccount,
                 content
         );
     }
