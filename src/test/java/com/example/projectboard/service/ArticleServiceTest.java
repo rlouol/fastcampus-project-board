@@ -2,10 +2,9 @@ package com.example.projectboard.service;
 
 import com.example.projectboard.domain.Article;
 import com.example.projectboard.domain.UserAccount;
-import com.example.projectboard.domain.type.SearchType;
+import com.example.projectboard.domain.contant.SearchType;
 import com.example.projectboard.dto.ArticleCommentDto;
 import com.example.projectboard.dto.ArticleDto;
-import com.example.projectboard.dto.ArticleWithCommentsDto;
 import com.example.projectboard.dto.UserAccountDto;
 import com.example.projectboard.repository.ArticleRepository;
 import com.example.projectboard.repository.UserAccountRepository;
@@ -37,6 +36,7 @@ class ArticleServiceTest {
 
     @Mock private ArticleRepository articleRepository;
     @Mock private UserAccountRepository userAccountRepository;
+
 
     @DisplayName("검색어 없이 게시글을 검색하면, 게시글 페이지를 반환한다.")
     @Test
@@ -115,7 +115,7 @@ class ArticleServiceTest {
         then(articleRepository).should().findAllDistinctHashtags();
     }
 
-    @DisplayName("게시글 ID로 조회하면, 댓글 달긴 게시글을 반환한다.")
+    @DisplayName("게시글 ID로 조회하면, 댓글 달린 게시글을 반환한다.")
     @Test
     void givenArticleId_whenSearchingArticleWithComments_thenReturnsArticleWithComments() {
         // Given
@@ -160,7 +160,7 @@ class ArticleServiceTest {
         given(articleRepository.findById(articleId)).willReturn(Optional.of(article));
 
         // When
-        ArticleWithCommentsDto dto = sut.getArticle(articleId);
+        ArticleDto dto = sut.getArticle(articleId);
 
         // Then
         assertThat(dto)
@@ -243,14 +243,13 @@ class ArticleServiceTest {
     void givenArticleId_whenDeletingArticle_thenDeletesArticle() {
         // Given
         Long articleId = 1L;
-        String userId = "uno";
-        willDoNothing().given(articleRepository).deleteByIdAndUserAccount_UserId(articleId, userId);
+        willDoNothing().given(articleRepository).deleteByIdAndUserAccount_UserId(articleId);
 
         // When
-        sut.deleteArticle(1L, userId);
+        sut.deleteArticle(1L);
 
         // Then
-        then(articleRepository).should().deleteByIdAndUserAccount_UserId(articleId, userId);
+        then(articleRepository).should().deleteByIdAndUserAccount_UserId(articleId);
     }
 
     @DisplayName("게시글 수를 조회하면, 게시글 수를 반환한다")

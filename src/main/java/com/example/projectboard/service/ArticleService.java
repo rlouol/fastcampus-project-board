@@ -2,7 +2,7 @@ package com.example.projectboard.service;
 
 import com.example.projectboard.domain.Article;
 import com.example.projectboard.domain.UserAccount;
-import com.example.projectboard.domain.type.SearchType;
+import com.example.projectboard.domain.contant.SearchType;
 import com.example.projectboard.dto.ArticleCommentDto;
 import com.example.projectboard.dto.ArticleDto;
 import com.example.projectboard.dto.ArticleWithCommentsDto;
@@ -52,7 +52,7 @@ public class ArticleService {
         articleRepository.save(dto.toEntity(userAccount));
     }
 
-    public void updateArticle(long articleId, ArticleDto dto) {
+    public void updateArticle(Long articleId, ArticleDto dto) {
         try {
             // getOne -> getReferenceById
             Article article = articleRepository.getReferenceById(articleId);
@@ -68,14 +68,22 @@ public class ArticleService {
         }
     }
 
-    public ArticleWithCommentsDto getArticle(Long articleId) {
+    @Transactional(readOnly = true)
+    public ArticleWithCommentsDto getArticleWithComments(Long articleId) {
         return articleRepository.findById(articleId)
                 .map(ArticleWithCommentsDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId: " + articleId));
     }
 
-    public void deleteArticle(long articleId, String userId) {
-        articleRepository.deleteByIdAndUserAccount_UserId(articleId, userId);
+    @Transactional(readOnly = true)
+    public ArticleDto getArticle(Long articleId) {
+        return articleRepository.findById(articleId)
+                .map(ArticleDto::from)
+                .orElseThrow(() -> new EntityNotFoundException("게시글이 없습니다 - articleId " + articleId));
+    }
+
+    public void deleteArticle(Long articleId) {
+        articleRepository.deleteByIdAndUserAccount_UserId(articleId);
     }
 
     @Transactional(readOnly = true)
