@@ -34,4 +34,4 @@
 
 ## 데모 페이지
 
-(공사 중)
+https://project-board-pgm.herokuapp.com/
